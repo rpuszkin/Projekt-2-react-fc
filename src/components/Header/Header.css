@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo {
+  aspect-ratio: 1;
+  height: 96px;
+  position: absolute;
+  left: 0;
+}
+
+.title {
+  padding: 10px 30px;
+  width: 300px;
+  margin: 25px auto;
+  font-weight: 400;
+  font-size: 28px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+}
