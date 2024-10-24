@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "./Form.css";
 
-function Form() {
+function Form({ setIsLoading }) {
+  const [isError, setIsError] = useState(false);
   const [result, setResult] = useState();
   const apiURL = "https://api.nbp.pl/api/exchangerates/rates/a/";
+
   const onSubmit = (event) => {
     event.preventDefault();
     const currency = event.target.currency.value;
@@ -15,12 +17,12 @@ function Form() {
     }
 
     setResult("");
-    //loader.classList.remove("hidden");
-
+    setIsLoading(true);
     fetch(`${apiURL}${currency}/?format=json`)
       .then((response) => {
         if (!response.ok) {
           alert("Nie udało się pobrać danych.");
+          setIsLoading(false);
         }
         return response.json();
       })
@@ -33,17 +35,20 @@ function Form() {
         ) {
           const rate = data.rates[0].mid;
           const result = (amount * rate).toFixed(2);
-          //loader.classList.add("hidden");
-          setResult(`to ${result} PLN.`);
-          //resultDiv.style.color = "black";
+          setIsError(false);
+
+          setResult(`to ${result} PLN`);
         } else {
-          setResult("wystąpił błąd, spróbu później");
+          setResult("wystąpił błąd, spróbuj później");
+          setIsError(true);
         }
       })
       .catch((error) => {
-        //loader.classList.add("hidden");
         setResult("Wystąpił błąd: " + error.message);
-        //resultDiv.style.color = "red";
+        setIsError(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -66,7 +71,7 @@ function Form() {
         <button type="submit" className="button">
           Przelicz
         </button>
-        <span className="result">{result}</span>
+        <span className={`result ${isError ? "error" : ""}`}>{result}</span>
       </form>
     </main>
   );

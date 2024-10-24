@@ -6,14 +6,12 @@ import Loader from "./components/Loader/Loader.jsx";
 import "./global.css";
 
 function App() {
-  // Komponent funkcyjny
   const [isLoading, setIsLoading] = useState(false);
-
   return (
     <>
       <Header />
       {isLoading && <Loader />}
-      <Form />
+      <Form setIsLoading={setIsLoading} />
     </>
   );
 }
