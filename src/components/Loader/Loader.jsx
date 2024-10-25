@@ -1,10 +1,6 @@
 import "./Loader.css";
 function Loader() {
-  return (
-    <div id="loader" className="loader">
-      Ładowanie...
-    </div>
-  );
+  return <div className="loader">Ładowanie...</div>;
 }
 
 export default Loader;
